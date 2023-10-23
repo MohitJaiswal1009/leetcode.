@@ -1,0 +1,27 @@
+class Solution {
+    public List<Integer> diffWaysToCompute(String s) {
+        List<Integer> ans=new ArrayList<>();
+        for(int i=0;i<s.length();i++){
+            char c=s.charAt(i);
+            if(c=='-' || c=='+' || c=='*'){
+                String a=s.substring(0,i);
+                String b=s.substring(i+1);
+                List<Integer> one=diffWaysToCompute(a);
+                List<Integer> two=diffWaysToCompute(b);
+                for(int x:one){
+                    for(int y:two){
+                        if(c=='-'){
+                            ans.add(x-y);
+                        }
+                        else  if(c=='+'){
+                            ans.add(x+y);
+                        }else if(c=='*')
+                        ans.add(x*y); 
+                    }
+                }
+            }
+        }
+        if(ans.size()==0) ans.add(Integer.valueOf(s));
+        return ans;
+    }
+}
