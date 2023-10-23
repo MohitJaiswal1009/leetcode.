@@ -1,0 +1,25 @@
+class Solution {
+    public int find(int ind,int []nums,int t,int [][]dp){
+        if(ind==0){
+            if(t%nums[ind]==0) return dp[0][t]=t/nums[0];
+            else return dp[0][t]=(int)1e9;
+        }
+        if(dp[ind][t]!=-1) return dp[ind][t];
+        int nt=0+find(ind-1,nums,t,dp);
+        int take=Integer.MAX_VALUE;
+        if(nums[ind]<=t) take=1+find(ind,nums,t-nums[ind],dp);
+        return dp[ind][t]=Math.min(nt,take);
+    }
+    public int coinChange(int[] nums, int sum) {
+        
+         int n=nums.length-1;
+         int dp[][]=new int[n+1][sum+1];
+         for(int []row:dp){
+             Arrays.fill(row,-1);
+         }
+         if(n==0 && sum%nums[0]!=0)return -1;
+         int ans=find(n,nums,sum,dp);
+            if(ans>=(int)1e9) return -1;
+            return ans;
+    }
+}
